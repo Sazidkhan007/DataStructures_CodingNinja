@@ -1,0 +1,40 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int ans[20][20];
+
+void placeRat(int maze[][20], int n, int r, int c){
+    
+    if(r == n-1 && c == n-1){
+        ans[r][c] = 1;
+        for(int i = 0; i < n; i++)
+            for(int j = 0; j < n; j++)
+                cout << ans[i][j] <<" ";
+        cout << endl;
+        return;
+    }
+    
+    if(r >= n || r < 0 || c >= n || c < 0 || maze[r][c] == 0 || ans[r][c] == 1)
+        return ;
+    
+    ans[r][c] = 1;
+    placeRat(maze, n, r+1, c);
+    placeRat(maze, n, r-1, c);
+    placeRat(maze, n, r, c+1);
+    placeRat(maze, n, r, c-1);
+    ans[r][c] = 0;
+    
+}
+
+void ratInAMaze(int maze[][20], int n){
+    
+    memset(ans, 0, 20*20*sizeof(int));
+    placeRat(maze, n, 0, 0);
+    
+}
+
+int main(){
+    int maze[][20] = {1,1,1,1};
+    int n = 2;
+    ratInAMaze(maze, n);
+}
